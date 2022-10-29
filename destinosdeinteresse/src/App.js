@@ -1,12 +1,54 @@
 
 import './App.css';
+import axios from 'axios';
+import React, { useEffect, } from 'react';
+import Select from 'react-select';
+import makeAnimeted from 'react-select/animated';
+
+const animatedCompontents = makeAnimeted()
+
+const arrayPais = [];
+
+const cidade = [];
 
 function App() {
+
+
+  useEffect(() => {
+    axios.get("https://amazon-api.sellead.com/country").then((response) => {
+      const data = response.data
+      for (var i = 0; i < data.length; i++) {
+        const pais = {
+          value: data[i].name,
+          label: data[i].name_ptbr
+        }
+
+        arrayPais.push(pais)
+      }
+
+    }).catch((error) => console.log(error))
+
+    axios.get("https://amazon-api.sellead.com/city").then((response) => {
+       if(){}
+      }
+    }).catch((error) => console.log(error))
+
+
+
+  }, [])
+
+
+
   return (
+
     <div className="App">
+
+
+
       <div class="formulario">
 
         <form>
+
           <div class="formularios">
             <div class="formulario-um formu">
 
@@ -38,22 +80,34 @@ function App() {
             <div class="formulario-dois formu">
               <div class="pais">
                 <h3>Pais</h3>
-                <select name="pais" multiple>
-                  <option value="valor0">selecione um pais</option>
-                  <option value="valor1">Brasil</option>
-                  <option value="valor2">China</option>
-                  <option value="valor3">Japão</option>
-                </select>
+                <Select
+                  isMulti
+                  components={animatedCompontents}
+                  options={arrayPais}
+                  isClearable={true}
+                  isSearchable={true}
+                  isDisabled={false}
+                  isLoading={false}
+                  isRtl={false}
+                  closeMenuOnSelect={false}
+                />
               </div>
 
               <div class="cidade">
                 <h3>Cidade:</h3>
-                <select name="cidade" multiple>
-                  <option value="valor0">Escolha uma cidade</option>
-                  <option value="valor1">Rio de janeiro</option>
-                  <option value="valor2">Xangai</option>
-                  <option value="valor3">Tokyo</option>
-                </select>
+
+                <Select
+                  components={animatedCompontents}
+                  isMulti
+                  options={cidade}
+                  isClearable={true}
+                  isSearchable={true}
+                  isDisabled={false}
+                  isLoading={true}
+                  isRtl={false}
+                  closeMenuOnSelect={false}
+                />
+
               </div>
             </div>
           </div>
@@ -65,7 +119,12 @@ function App() {
       </div>
 
     </div>
-  );
+
+  )
+
+
+
+
 }
 
 export default App;
