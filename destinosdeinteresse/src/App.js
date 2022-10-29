@@ -17,7 +17,7 @@ function App() {
   useEffect(() => {
     axios.get("https://amazon-api.sellead.com/country").then((response) => {
       const data = response.data
-      for (var i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         const pais = {
           value: data[i].name,
           label: data[i].name_ptbr
@@ -28,10 +28,10 @@ function App() {
 
     }).catch((error) => console.log(error))
 
-    axios.get("https://amazon-api.sellead.com/city").then((response) => {
-       if(){}
-      }
-    }).catch((error) => console.log(error))
+    // axios.get("https://amazon-api.sellead.com/city").then((response) => {
+    //    if(){}
+    //   }
+    // }).catch((error) => console.log(error))
 
 
 
