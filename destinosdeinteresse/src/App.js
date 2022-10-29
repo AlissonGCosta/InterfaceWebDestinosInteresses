@@ -4,12 +4,28 @@ import axios from 'axios';
 import React, { useEffect, } from 'react';
 import Select from 'react-select';
 import makeAnimeted from 'react-select/animated';
+import { IMaskInput } from "react-imask";
 
 const animatedCompontents = makeAnimeted()
 
 const arrayPais = [];
 
 const cidade = [];
+
+// fazendo a função para n aceitar numeros no campo de nome
+const nomeCompleto =document.getElementById("nomeCompleto")
+
+nomeCompleto.addEventListener("keypress", function(e){
+
+  const keyCode = (e.keyCode ? e.keyCode : e.witch )
+
+  console.log(keyCode)
+
+  if(keyCode > 47 && keyCode < 58){
+      e.preventDefault()
+  }
+})
+
 
 function App() {
 
@@ -22,18 +38,24 @@ function App() {
           value: data[i].name,
           label: data[i].name_ptbr
         }
-
         arrayPais.push(pais)
       }
 
     }).catch((error) => console.log(error))
 
-    // axios.get("https://amazon-api.sellead.com/city").then((response) => {
-    //    if(){}
-    //   }
-    // }).catch((error) => console.log(error))
+    axios.get("https://amazon-api.sellead.com/city").then((response) => {
+      const data = response.data
 
+      for (let i = 0; i < data.length; i++) {
+        const pais = {
+          value: data[i].id,
+          label: data[i].name
+        }
+        cidade.push(pais)
 
+      }
+
+    }).catch((error) => console.log(error))
 
   }, [])
 
@@ -56,7 +78,7 @@ function App() {
               <div class="dados-pessoais">
                 <div class="nome">
                   <h3>Nome:</h3>
-                  <input type="Text" placeholder="Nome" required="required"></input>
+                  <input type="name" placeholder="Nome" required="required" id = "nomeCompleto"></input>
                 </div>
 
                 <div class="Email">
@@ -66,12 +88,20 @@ function App() {
 
                 <div class="telefone" required>
                   <h3>Telefone:</h3>
-                  <input type="text" placeholder="Telefone" required="required"></input>
+                  <IMaskInput
+                    mask="00 0 0000-0000"
+                    placeholder="Digite seu Telefone:"
+                    required
+                  />
                 </div>
 
                 <div class="cpf">
                   <h3>CPF:</h3>
-                  <input type="text" placeholder="cpf" required="required"></input>
+                  <IMaskInput
+                    mask="000.000.000-00"
+                    placeholder="Digite o seu CPF"
+                    required
+                  />
                 </div>
               </div>
 
@@ -81,6 +111,7 @@ function App() {
               <div class="pais">
                 <h3>Pais</h3>
                 <Select
+                  className='selectPais'
                   isMulti
                   components={animatedCompontents}
                   options={arrayPais}
@@ -97,13 +128,14 @@ function App() {
                 <h3>Cidade:</h3>
 
                 <Select
+                  className='selectCidade'
                   components={animatedCompontents}
                   isMulti
                   options={cidade}
                   isClearable={true}
                   isSearchable={true}
                   isDisabled={false}
-                  isLoading={true}
+                  isLoading={false}
                   isRtl={false}
                   closeMenuOnSelect={false}
                 />
