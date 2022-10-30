@@ -1,4 +1,3 @@
-
 import './App.css';
 import axios from 'axios';
 import React, { useEffect, } from 'react';
@@ -11,21 +10,6 @@ const animatedCompontents = makeAnimeted()
 const arrayPais = [];
 
 const cidade = [];
-
-// fazendo a função para n aceitar numeros no campo de nome
-const nomeCompleto =document.getElementById("nomeCompleto")
-
-nomeCompleto.addEventListener("keypress", function(e){
-
-  const keyCode = (e.keyCode ? e.keyCode : e.witch )
-
-  console.log(keyCode)
-
-  if(keyCode > 47 && keyCode < 58){
-      e.preventDefault()
-  }
-})
-
 
 function App() {
 
@@ -56,16 +40,12 @@ function App() {
       }
 
     }).catch((error) => console.log(error))
-
+ 
   }, [])
-
-
 
   return (
 
     <div className="App">
-
-
 
       <div class="formulario">
 
@@ -78,7 +58,7 @@ function App() {
               <div class="dados-pessoais">
                 <div class="nome">
                   <h3>Nome:</h3>
-                  <input type="name" placeholder="Nome" required="required" id = "nomeCompleto"></input>
+                  <input type="name" placeholder="Nome" required="required"  ></input>
                 </div>
 
                 <div class="Email">
@@ -151,12 +131,7 @@ function App() {
       </div>
 
     </div>
-
   )
-
-
-
-
 }
 
 export default App;
